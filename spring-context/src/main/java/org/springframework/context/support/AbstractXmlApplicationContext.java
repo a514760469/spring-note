@@ -124,7 +124,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 		if (configResources != null) {
 			reader.loadBeanDefinitions(configResources);
 		}
-		// 注释 1.4 获取已经加载的资源文件路径（这些配置文件路径在第一步已经加载了）
+		// 注释 1.4 获取已经加载的资源文件路径（这些配置文件路径在第一步已经加载了） refresh()之前 setConfigLocations(configLocations)
 		String[] configLocations = getConfigLocations();
 		if (configLocations != null) {
 			reader.loadBeanDefinitions(configLocations);

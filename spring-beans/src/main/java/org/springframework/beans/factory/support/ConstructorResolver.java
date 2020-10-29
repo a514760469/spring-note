@@ -121,15 +121,15 @@ class ConstructorResolver {
 		BeanWrapperImpl bw = new BeanWrapperImpl();
 		this.beanFactory.initBeanWrapper(bw);
 
-		Constructor<?> constructorToUse = null;
+		Constructor<?> constructorToUse = null;// 要使用的构造器
 		ArgumentsHolder argsHolderToUse = null;
-		Object[] argsToUse = null;
+		Object[] argsToUse = null;// 构造器要使用的参数，因为是有参构造器嘛
 
 		if (explicitArgs != null) {
 			argsToUse = explicitArgs;
 		}
 		else {
-			Object[] argsToResolve = null;
+			Object[] argsToResolve = null;// 构造器要使用的参数, 待解析
 			synchronized (mbd.constructorArgumentLock) {
 				constructorToUse = (Constructor<?>) mbd.resolvedConstructorOrFactoryMethod;
 				if (constructorToUse != null && mbd.constructorArgumentsResolved) {
@@ -179,7 +179,7 @@ class ConstructorResolver {
 					mbd.getResolvedAutowireMode() == AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR);
 			ConstructorArgumentValues resolvedValues = null;
 
-			int minNrOfArgs;
+			int minNrOfArgs;// 最少的参数个数
 			if (explicitArgs != null) {
 				minNrOfArgs = explicitArgs.length;
 			}
@@ -188,7 +188,7 @@ class ConstructorResolver {
 				resolvedValues = new ConstructorArgumentValues();
 				minNrOfArgs = resolveConstructorArguments(beanName, mbd, bw, cargs, resolvedValues);
 			}
-
+			// 对构造器进行排序 public排在前面，参数多的排在前面
 			AutowireUtils.sortConstructors(candidates);
 			int minTypeDiffWeight = Integer.MAX_VALUE;
 			Set<Constructor<?>> ambiguousConstructors = null;
@@ -200,6 +200,7 @@ class ConstructorResolver {
 				if (constructorToUse != null && argsToUse != null && argsToUse.length > paramTypes.length) {
 					// Already found greedy constructor that can be satisfied ->
 					// do not look any further, there are only less greedy constructors left.
+					// 已经取到了想要的构造器和所需的参数
 					break;
 				}
 				if (paramTypes.length < minNrOfArgs) {
@@ -233,12 +234,13 @@ class ConstructorResolver {
 				}
 				else {
 					// Explicit arguments given -> arguments length must match exactly.
+					// 给定了构造器的参数，但是当前构造器参数个数不满足
 					if (paramTypes.length != explicitArgs.length) {
 						continue;
 					}
 					argsHolder = new ArgumentsHolder(explicitArgs);
 				}
-
+				// 这里会返回一个数值作为作为构造器所需参数的差异值。差异值越小说明匹配度越高
 				int typeDiffWeight = (mbd.isLenientConstructorResolution() ?
 						argsHolder.getTypeDifferenceWeight(paramTypes) : argsHolder.getAssignabilityWeight(paramTypes));
 				// Choose this constructor if it represents the closest match.
@@ -249,12 +251,13 @@ class ConstructorResolver {
 					minTypeDiffWeight = typeDiffWeight;
 					ambiguousConstructors = null;
 				}
+				// 如果之前已经选择了构造器和参数，但是计算出的差异值和最小差异值相等，也就是本构造器和之前构造器匹配度一样
 				else if (constructorToUse != null && typeDiffWeight == minTypeDiffWeight) {
 					if (ambiguousConstructors == null) {
 						ambiguousConstructors = new LinkedHashSet<>();
 						ambiguousConstructors.add(constructorToUse);
 					}
-					ambiguousConstructors.add(candidate);
+					ambiguousConstructors.add(candidate);// 保存起来，在非宽松模式下会抛出异常，因为不知道该选哪个。
 				}
 			}
 
@@ -278,7 +281,7 @@ class ConstructorResolver {
 			}
 
 			if (explicitArgs == null && argsHolderToUse != null) {
-				argsHolderToUse.storeCache(mbd, constructorToUse);
+				argsHolderToUse.storeCache(mbd, constructorToUse);// 保存构造器和所需参数到mbd中
 			}
 		}
 
@@ -298,6 +301,7 @@ class ConstructorResolver {
 						this.beanFactory.getAccessControlContext());
 			}
 			else {
+				// 使用合适的实例化策略去实例化bean，默认策略：CglibSubclassingInstantiationStrategy
 				return strategy.instantiate(mbd, beanName, this.beanFactory, constructorToUse, argsToUse);
 			}
 		}
@@ -806,7 +810,7 @@ class ConstructorResolver {
 				new BeanDefinitionValueResolver(this.beanFactory, beanName, mbd, converter);
 		Class<?>[] paramTypes = executable.getParameterTypes();
 
-		Object[] resolvedArgs = new Object[argsToResolve.length];
+		Object[] resolvedArgs = new Object[argsToResolve.length];// 解析后的参数 用于返回
 		for (int argIndex = 0; argIndex < argsToResolve.length; argIndex++) {
 			Object argValue = argsToResolve[argIndex];
 			MethodParameter methodParam = MethodParameter.forExecutable(executable, argIndex);

@@ -122,6 +122,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 
 	//-------------------------------------------------------------------------
 	// Typical methods for creating and populating external bean instances
+	// 创建和填充外部bean的典型方法
 	//-------------------------------------------------------------------------
 
 	/**
@@ -132,6 +133,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	 * fields and methods as well as applying all standard bean initialization callbacks.
 	 * It does <i>not</i> imply traditional by-name or by-type autowiring of properties;
 	 * use {@link #createBean(Class, int, boolean)} for those purposes.
+	 * 完全创建一个 bean 实例，执行所有适用的 bean后置处理器。
 	 * @param beanClass the class of the bean to create
 	 * @return the new bean instance
 	 * @throws BeansException if instantiation or wiring failed
@@ -145,6 +147,8 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	 * methods, either for new instances or for deserialized instances. It does
 	 * <i>not</i> imply traditional by-name or by-type autowiring of properties;
 	 * use {@link #autowireBeanProperties} for those purposes.
+	 * 填充给定的bean的实例(existingBean), 通过应用 after-instantiation回调和属性的后置处理。
+	 * 这主要是为了(重新)填充带注释的字段和方法。
 	 * @param existingBean the existing bean instance
 	 * @throws BeansException if wiring failed
 	 */
@@ -172,6 +176,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 
 	//-------------------------------------------------------------------------
 	// Specialized methods for fine-grained control over the bean lifecycle
+	// 对 bean 生命周期细粒度控制的专门方法
 	//-------------------------------------------------------------------------
 
 	/**
@@ -256,6 +261,9 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	 * offers distinct, fine-grained operations for those purposes, for example
 	 * {@link #initializeBean}. However, {@link InstantiationAwareBeanPostProcessor}
 	 * callbacks are applied, if applicable to the configuration of the instance.
+	 *
+	 * 将具有给定名称的bean定义的属性值应用到给定bean实例。
+	 *
 	 * @param existingBean the existing bean instance
 	 * @param beanName the name of the bean definition in the bean factory
 	 * (a bean definition of that name has to be available)
@@ -325,6 +333,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	 * registered {@link DestructionAwareBeanPostProcessor DestructionAwareBeanPostProcessors}.
 	 * <p>Any exception that arises during destruction should be caught
 	 * and logged instead of propagated to the caller of this method.
+	 * 销毁指定的bean实例
 	 * @param existingBean the bean instance to destroy
 	 */
 	void destroyBean(Object existingBean);

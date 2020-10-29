@@ -774,6 +774,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return whether to resolve constructors in lenient mode or in strict mode.
+	 * 返回是否宽松模式。 宽松模式(默认)还是严格模式
 	 */
 	public boolean isLenientConstructorResolution() {
 		return this.lenientConstructorResolution;
@@ -982,6 +983,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Return whether this bean definition is 'synthetic', that is,
 	 * not defined by the application itself.
+	 * 是否是自定义的
 	 */
 	public boolean isSynthetic() {
 		return this.synthetic;

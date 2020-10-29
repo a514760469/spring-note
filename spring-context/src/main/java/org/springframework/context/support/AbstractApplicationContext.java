@@ -178,13 +178,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/** BeanFactoryPostProcessors to apply on refresh. */
 	private final List<BeanFactoryPostProcessor> beanFactoryPostProcessors = new ArrayList<>();
 
-	/** System time in milliseconds when this context started. */
+	/** System time in milliseconds when this context started. 启动时间 */
 	private long startupDate;
 
-	/** Flag that indicates whether this context is currently active. */
+	/** Flag that indicates whether this context is currently active. 是否处于活动状态的标志 */
 	private final AtomicBoolean active = new AtomicBoolean();
 
-	/** Flag that indicates whether this context has been closed already. */
+	/** Flag that indicates whether this context has been closed already. 是否关闭标志 */
 	private final AtomicBoolean closed = new AtomicBoolean();
 
 	/** Synchronization monitor for the "refresh" and "destroy". */
@@ -606,10 +606,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment.
-		// 在上下文环境中初始化任何占位符属性源
+		// 在上下文环境中初始化任何占位符属性源 留给子类实现
 		initPropertySources();
 
-		// Validate that all properties marked as required are resolvable:
+		// Validate that all properties marked as required are resolvable: 验证所有标记为必需的属性都是可解析的
 		// see ConfigurablePropertyResolver#setRequiredProperties
 		getEnvironment().validateRequiredProperties();
 
@@ -863,8 +863,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Finish the initialization of this context's bean factory,
-	 * initializing all remaining singleton beans.
+	 * Finish the initialization of this context's bean factory, initializing all remaining singleton beans.
+	 * 初始化所有剩余单例bean
 	 */
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.

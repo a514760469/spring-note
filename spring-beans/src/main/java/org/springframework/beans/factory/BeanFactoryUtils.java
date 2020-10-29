@@ -61,7 +61,7 @@ public abstract class BeanFactoryUtils {
 
 
 	/**
-	 * Return whether the given name is a factory dereference
+	 * Return whether the given name is a factory dereference 返回给定名称是否为工厂解除引用 通过前缀是否‘&’判断
 	 * (beginning with the factory dereference prefix).
 	 * @param name the name of the bean
 	 * @return whether the given name is a factory dereference
