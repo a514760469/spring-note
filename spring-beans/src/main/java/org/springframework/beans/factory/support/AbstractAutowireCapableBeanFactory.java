@@ -596,7 +596,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				logger.trace("Eagerly caching bean '" + beanName +
 						"' to allow for resolving potential circular references");
 			}
-			// 注释 5.2 将缓存中的 bean 信息更新，
+			// 注释 5.2 主要是将 beanName和ObjectFactory(lambda->$getEarlyBeanReference)保存到 singletonFactories中
 			// getEarlyBeanReference 实现的功能是将切面动态织入bean中 (aop)
 			addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
 		}
@@ -621,7 +621,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 		// 是否过早的暴露出去了 (有循环依赖)
 		if (earlySingletonExposure) {
-			// 从singletonFactories中获取一下
+			// 只是单纯从缓存中取，不从singletonFactories中取【F7进入】
 			Object earlySingletonReference = getSingleton(beanName, false);
 			// earlySingletonReference 只有在检测到有循环依赖的情况下才 不为空？
 			if (earlySingletonReference != null) {
@@ -1160,7 +1160,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
 				Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName);
 				if (result != null) {
-					return result;
+					return result;// 有任何一个后处理器返回了代理对象直接return
 				}
 			}
 		}
@@ -1738,7 +1738,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			else {
 				String propertyName = pv.getName();
 				Object originalValue = pv.getValue();
-				// 注释 5.5 解析参数，如果是引用对象，将会进行提前加载
+				// 注释 5.5 解析参数，如果是引用对象，将会进行提前加载	【重要，可能去创建bean】
 				Object resolvedValue = valueResolver.resolveValueIfNecessary(pv, originalValue);
 				Object convertedValue = resolvedValue;
 				boolean convertible = bw.isWritableProperty(propertyName) &&
