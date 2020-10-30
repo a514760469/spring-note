@@ -12,8 +12,8 @@ public class BeanFactoryPostProcessorBootstrap {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("factory.bean/factory-post-processor.xml");
-		BeanFactoryPostProcessor beanFactoryPostProcessor = (BeanFactoryPostProcessor) context.getBean("carPostProcessor");
-		beanFactoryPostProcessor.postProcessBeanFactory(context.getBeanFactory());
+//		BeanFactoryPostProcessor beanFactoryPostProcessor = (BeanFactoryPostProcessor) context.getBean("carPostProcessor");
+//		beanFactoryPostProcessor.postProcessBeanFactory(context.getBeanFactory());
 		// 输出 ：Car{maxSpeed=0, brand='*****', price=10000.0}，敏感词被替换了
 		System.out.println(context.getBean("car"));
 

@@ -356,7 +356,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	protected void beforeSingletonCreation(String beanName) {
 		// 判断是否在创建检查排除的bean中  并添加到当前正在创建的bean中
 		if (!this.inCreationCheckExclusions.contains(beanName) && !this.singletonsCurrentlyInCreation.add(beanName)) {
-			// 没有被创建检查排除且已经在当前正在创建的bean中了
+			// 没有被创建检查排除且已经在当前正在创建的bean中了，【构造器循环依赖会在这里抛出异常】
 			throw new BeanCurrentlyInCreationException(beanName);
 		}
 	}
