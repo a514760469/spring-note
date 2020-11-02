@@ -366,7 +366,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		if (specificInterceptors != DO_NOT_PROXY) {
 			// 增强方法不为空
 			this.advisedBeans.put(cacheKey, Boolean.TRUE);
-			// 创建代理
+			// 创建代理对象
 			Object proxy = createProxy(
 					bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
 			this.proxyTypes.put(cacheKey, proxy.getClass());
@@ -496,7 +496,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		if (advisorsPreFiltered()) {
 			proxyFactory.setPreFiltered(true);
 		}
-		// 生成代理，委托给了 ProxyFactory 去处理。
+		// 生成代理，委托给了 ProxyFactory 去处理。（JDK or CGLIB）
 		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 

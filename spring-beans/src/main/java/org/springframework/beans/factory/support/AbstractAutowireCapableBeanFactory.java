@@ -619,7 +619,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						mbd.getResourceDescription(), beanName, "Initialization of bean failed", ex);
 			}
 		}
-		// 是否过早的暴露出去了 (有循环依赖)
+		// 是否过早的暴露出去了
 		if (earlySingletonExposure) {
 			// 只是单纯从缓存中取，不从singletonFactories中取【F7进入】
 			Object earlySingletonReference = getSingleton(beanName, false);

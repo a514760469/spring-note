@@ -114,6 +114,9 @@ public abstract class AopConfigUtils {
 		}
 	}
 
+	/**
+	 * 根据需要注册或升级apc(auto proxy creator)
+	 */
 	@Nullable
 	private static BeanDefinition registerOrEscalateApcAsRequired(
 			Class<?> cls, BeanDefinitionRegistry registry, @Nullable Object source) {

@@ -11,11 +11,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TransactionBootstrap {
 
 	public static void main(String[] args) {
-			ApplicationContext context = new ClassPathXmlApplicationContext("transaction/transaction.xml");
-			UserJdbcTemplate jdbcTemplate = (UserJdbcTemplate) context.getBean("userJdbcTemplate");
-			System.out.println("--- Records Creation start ----");
-			JdbcUser user = new JdbcUser(4, "test", 21);
-			jdbcTemplate.insertUser(user);
+		ApplicationContext context = new ClassPathXmlApplicationContext("transaction/transaction.xml");
+		UserDao jdbcTemplate = (UserDao) context.getBean("userJdbcTemplate");
+		System.out.println("--- Records Creation start ----");
+		JdbcUser user = new JdbcUser(4, "test", 21);
+		jdbcTemplate.insertUser(user);
 	}
 
 }

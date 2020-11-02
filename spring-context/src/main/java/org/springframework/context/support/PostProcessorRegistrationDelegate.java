@@ -349,7 +349,7 @@ final class PostProcessorRegistrationDelegate {
 		public Object postProcessAfterInitialization(Object bean, String beanName) {
 			if (!(bean instanceof BeanPostProcessor) && !isInfrastructureBean(beanName) &&
 					this.beanFactory.getBeanPostProcessorCount() < this.beanPostProcessorTargetCount) {
-				if (logger.isInfoEnabled()) {
+				if (logger.isInfoEnabled()) {// 不符合被所有后处理器处理的条件
 					logger.info("Bean '" + beanName + "' of type [" + bean.getClass().getName() +
 							"] is not eligible for getting processed by all BeanPostProcessors " +
 							"(for example: not eligible for auto-proxying)");
