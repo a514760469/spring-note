@@ -136,7 +136,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 				}
 				// 实例化namespaceHandler
 				NamespaceHandler namespaceHandler = (NamespaceHandler) BeanUtils.instantiateClass(handlerClass);
-				// 调用 handler 的 init() 方法
+				// 【调用 handler 的 init() 方法】
 				namespaceHandler.init();
 				// 放入 handler 映射中
 				handlerMappings.put(namespaceUri, namespaceHandler);

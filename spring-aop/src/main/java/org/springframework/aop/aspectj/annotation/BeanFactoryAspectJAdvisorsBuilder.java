@@ -114,10 +114,10 @@ public class BeanFactoryAspectJAdvisorsBuilder {
 							if (amd.getAjType().getPerClause().getKind() == PerClauseKind.SINGLETON) {
 								MetadataAwareAspectInstanceFactory factory =
 										new BeanFactoryAspectInstanceFactory(this.beanFactory, beanName);
-								// 解析标记 AspectJ 注解中的增强方法
+								// 解析标记 AspectJ 注解中的增强方法，【封装为Advisor】
 								List<Advisor> classAdvisors = this.advisorFactory.getAdvisors(factory);
 								if (this.beanFactory.isSingleton(beanName)) {
-									this.advisorsCache.put(beanName, classAdvisors);
+									this.advisorsCache.put(beanName, classAdvisors);// 存入Advisor缓存
 								}
 								else {
 									this.aspectFactoryCache.put(beanName, factory);

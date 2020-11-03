@@ -240,6 +240,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		return wrapIfNecessary(bean, beanName, cacheKey);
 	}
 
+	/**
+	 * 在实例化之前做了什么
+	 */
 	@Override
 	public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
 		// 注释 8. 切面 bean 实例化之前执行的方法
@@ -484,7 +487,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 				evaluateProxyInterfaces(beanClass, proxyFactory);
 			}
 		}
-		// 这一步中，主要将拦截器封装为增强器
+		// 这一步中，主要将拦截器封装为增强器 【封装 Advisor 并加入到 ProxyFactory】
 		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
 		proxyFactory.addAdvisors(advisors);
 		proxyFactory.setTargetSource(targetSource);

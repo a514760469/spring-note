@@ -87,6 +87,8 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 
 	/**
 	 * 发现候选的 advisor
+	 * 1、先根据父类的逻辑去找(super)。
+	 * 2、调用buildAspectJAdvisors() 查找当前beanFactory中所有加 @Aspect 注解的bean
 	 */
 	@Override
 	protected List<Advisor> findCandidateAdvisors() {
